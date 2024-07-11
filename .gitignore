@@ -1,2 +1,4 @@
 node_modules
 junk
+bin/server.cert
+bin/server.key
