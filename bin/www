@@ -42,8 +42,6 @@ const options = {
     cert: fs.readFileSync(__dirname+'/server.cert')
 };
 
-
-
 const secureServer = https.createServer(options, app);
 
 /**
