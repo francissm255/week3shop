@@ -9,6 +9,7 @@ const router = express.Router();
 /* GET users listing. */
 router.get('/', cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, function (req, res, next) {
     console.log(req.body);
+    console.log('I ran /');
 
     if (req.body.err) {
         const err = new Error("You are not an admin! I don't actually think this is possible.");
@@ -80,6 +81,15 @@ router.get('/logout', cors.corsWithOptions, (req, res, next) => {
         const err = new Error('You are not logged in!');
         err.status = 401;
         return next(err);
+    }
+});
+
+router.get('/facebook/token', passport.authenticate('facebook-token', { session: false }), (req, res) => {
+    if (req.user) {
+        const token = authenticate.getToken({ _id: req.user._id });
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json({ success: true, token: token, status: 'You are successfully logged in!' });
     }
 });
 
